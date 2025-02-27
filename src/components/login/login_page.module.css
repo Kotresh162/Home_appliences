@@ -1,0 +1,33 @@
+/* Fix class name syntax (use `-` instead of `_` in the import) */
+.login-container {
+    display: flex; /* Corrected `flex: display;` */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black; /* Corrected `border: 1px black;` */
+    padding: 20px ;
+    width: 250px;
+    height: 300px;
+    margin: auto;
+    border-radius: 10px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Remove `.login-container.h2`, use `.login-container h2` instead */
+.login-container h2 {
+    text-align: center;
+}
+
+/* Add styles for input fields */
+.name-box,
+.password-box {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
