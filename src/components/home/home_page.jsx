@@ -31,7 +31,7 @@ function Homepage() {
 
             {/* Cards Section */}
             <div className={style["cards"]} id="pricing">
-                <h2>Cards Section</h2>
+                <h2>Pricing Section</h2>
             </div>
 
             {/* Footer Section */}
