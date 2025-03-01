@@ -1,10 +1,16 @@
-import Login from "./components/login/login_page"
-import Register from "./components/register/register_page"
-function app(){
-  return <>
-  <Register/>
-  {/* <Login /> */}
-  </>
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import route from "./routes/route";
+
+function App() {
+    return (
+        <Router>
+            <Routes>
+                {route.map((r, index) => (
+                    <Route key={index} path={r.path} element={r.element} />
+                ))}
+            </Routes>
+        </Router>
+    );
 }
 
-export default app;
+export default App;

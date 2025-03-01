@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import style from "./home_page.module.css";
 
 function Homepage() {
+    const navigate = useNavigate(); // Define navigate function
+
     return (
         <>
             {/* Header Section */}
@@ -21,7 +24,8 @@ function Homepage() {
                 <div className={style["hero-text"]}>
                     <h1>Welcome to Your Home Appliances Controller</h1>
                 </div>
-                <button>Sign Up</button>
+                {/* Fixed: Use navigate correctly */}
+                <button onClick={() => navigate("/register")}>Sign Up</button>
             </div>
 
             {/* Features Section */}

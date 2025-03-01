@@ -11,7 +11,7 @@ export default function Login() {
             </form>
             <button>Log In</button>
             <p>Don't have account</p>
-            <a href="">Register here</a>
+            <a href="/register">Register here</a>
         </div>
     );
 }

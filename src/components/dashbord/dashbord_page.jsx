@@ -1,5 +1,5 @@
   import React, { useState, useEffect } from "react";
-  import { Container, Grid2, Card, CardContent, Typography, Button } from "@mui/material";
+  import { Container, Grid, Card, CardContent, Typography, Button } from "@mui/material";
   import { Line } from "react-chartjs-2";
   import {
     Chart as ChartJS,
@@ -50,16 +50,16 @@
           Energy Consumption Dashboard
         </Typography>
         {alert && <Typography color="error">Budget Exceeded!</Typography>}
-        <Grid2 container spacing={3}>
-          <Grid2 item xs={12} md={8}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={8}>
             <Card>
               <CardContent>
                 <Typography variant="h6">Real-Time Energy Consumption</Typography>
                 {energyData.length > 0 ? <Line data={chartData} /> : <Typography>Loading data...</Typography>}
               </CardContent>
             </Card>
-          </Grid2>
-          <Grid2 item xs={12} md={4}>
+          </Grid>
+          <Grid item xs={12} md={4}>
             <Card>
               <CardContent>
                 <Typography variant="h6">Set Energy Budget</Typography>
@@ -72,8 +72,8 @@
                 </Button>
               </CardContent>
             </Card>
-          </Grid2>
-        </Grid2>
+          </Grid>
+        </Grid>
       </Container>
       </>
     );
