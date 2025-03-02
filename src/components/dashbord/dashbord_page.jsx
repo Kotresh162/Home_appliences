@@ -1,83 +1,76 @@
-  import React, { useState, useEffect } from "react";
-  import { Container, Grid, Card, CardContent, Typography, Button } from "@mui/material";
-  import { Line } from "react-chartjs-2";
-  import {
-    Chart as ChartJS,
-    LineElement,
-    PointElement,
-    LinearScale,
-    Title,
-    Tooltip,
-    Legend,
-    CategoryScale,
-  } from "chart.js";
-  
-  ChartJS.register(LineElement, PointElement, LinearScale, Title, Tooltip, Legend, CategoryScale);
-  
-  const Dashboard = () => {
-    const [energyData, setEnergyData] = useState([]);
-    const [budget, setBudget] = useState(100);
-    const [alert, setAlert] = useState(false);
-  
-    useEffect(() => {
-      const interval = setInterval(() => {
-        const newUsage = Math.floor(Math.random() * 50) + 1;
-        setEnergyData((prevData) => [...prevData.slice(-9), { usage: newUsage }]);
-        if (newUsage > budget) setAlert(true);
-      }, 2000);
-  
-      return () => clearInterval(interval);
-    }, [budget]);
-  
-    const chartData = {
-      labels: energyData.map((_, index) => index + 1),
-      datasets: [
-        {
-          label: "Energy Consumption (kWh)",
-          data: energyData.map((data) => data.usage),
-          fill: false,
-          borderColor: "#3f51b5",
-          tension: 0.1,
-        },
-      ],
-    };
-  
-    return (
-        <>
-        <nav>the navbar</nav>
-      <Container>
-        <Typography variant="h4" gutterBottom>
-          Energy Consumption Dashboard
-        </Typography>
-        {alert && <Typography color="error">Budget Exceeded!</Typography>}
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Real-Time Energy Consumption</Typography>
-                {energyData.length > 0 ? <Line data={chartData} /> : <Typography>Loading data...</Typography>}
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Set Energy Budget</Typography>
-                <Typography variant="h4">{budget} kWh</Typography>
-                <Button variant="contained" color="primary" onClick={() => setBudget(budget + 10)}>
-                  Increase Budget
-                </Button>
-                <Button variant="contained" color="secondary" onClick={() => setBudget(budget - 10)}>
-                  Decrease Budget
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-      </Container>
-      </>
-    );
+import React, { useEffect, useState } from "react";
+import socket from "../../services/socket.js";
+import { Line, Bar } from "react-chartjs-2";
+import { Card, CardContent, Typography, Grid, Container } from "@mui/material";
+
+const EnergyDashboard = () => {
+  const [energyData, setEnergyData] = useState([]);
+  const [deviceData, setDeviceData] = useState({});
+
+  useEffect(() => {
+    socket.on("message", (data) => {
+      const parsedData = JSON.parse(data);
+      setEnergyData((prev) => [...prev.slice(-20), parsedData]);
+
+      setDeviceData((prev) => ({
+        ...prev,
+        [parsedData.deviceName]: (prev[parsedData.deviceName] || 0) + parsedData.energyUsed,
+      }));
+    });
+
+    return () => socket.off("message");
+  }, []);
+
+  const lineChartData = {
+    labels: energyData.map((d) => new Date(d.timestamp).toLocaleTimeString()),
+    datasets: [
+      {
+        label: "Energy Consumption (kWh)",
+        data: energyData.map((d) => d.energyUsed),
+        borderColor: "blue",
+        fill: false,
+      },
+    ],
   };
-  
-  export default Dashboard;
-  
+
+  const barChartData = {
+    labels: Object.keys(deviceData),
+    datasets: [
+      {
+        label: "Total Energy Used (kWh)",
+        data: Object.values(deviceData),
+        backgroundColor: "green",
+      },
+    ],
+  };
+
+  return (
+    <Container>
+      <Typography variant="h4" sx={{ textAlign: "center", mt: 3 }}>
+        Real-Time Energy Monitoring
+      </Typography>
+
+      <Grid container spacing={3} sx={{ mt: 2 }}>
+        <Grid item xs={12} md={6}>
+          <Card sx={{ p: 2 }}>
+            <CardContent>
+              <Typography variant="h6">Real-Time Energy Consumption</Typography>
+              <Line data={lineChartData} />
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <Card sx={{ p: 2 }}>
+            <CardContent>
+              <Typography variant="h6">Device-Wise Energy Usage</Typography>
+              <Bar data={barChartData} />
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+};
+
+export default EnergyDashboard;
