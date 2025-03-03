@@ -29,6 +29,11 @@ The application is rendered in `StrictMode` for better development practices.
 └── README.md                # Project documentation
 ```
 
+## the interfaces are
+![alt text](<Screenshot 2025-03-03 235402.png>) 
+![alt text](<Screenshot 2025-03-03 235337.png>)
+![alt text](image.png)
+![alt text](image-1.png)
 ## Technologies and Packages
 - **React**: A JavaScript library for building user interfaces.
 - **Vite**: A build tool that provides a fast development environment.
