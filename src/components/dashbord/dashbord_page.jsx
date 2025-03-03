@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Box, Grid, IconButton, Menu, MenuItem, Paper, Toolbar, Typography, Avatar } from '@mui/material';
 import { Bar, Pie } from 'react-chartjs-2';
-import { AccountCircle } from '@mui/icons-material';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend } from 'chart.js';
+import './dashbord.module.css';  // Import the CSS file
 
 // Registering Chart.js elements
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Legend);
@@ -90,14 +90,11 @@ export default function EnergyDashboard() {
   }, []);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} className="energy-dashboard-container">
       {/* Header with Navbar */}
       <AppBar
         position="sticky"
-        sx={{
-          backgroundColor: scrolling ? 'rgba(0, 0, 0, 0.8)' : 'transparent',
-          transition: 'background-color 0.3s ease',
-        }}
+        className={scrolling ? "appbar-scrolling" : "appbar-transparent"}
       >
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
@@ -105,12 +102,12 @@ export default function EnergyDashboard() {
           </Typography>
 
           {/* Profile Button with Avatar */}
-          <IconButton edge="end" color="inherit" onClick={handleMenu} sx={{ padding: 0 }}>
+          <IconButton edge="end" color="inherit" onClick={handleMenu} sx={{ padding: 0 }} className="profile-button">
             <Avatar alt={user.name} src={user.profilePicture} />
           </IconButton>
 
           {/* Menu for profile options */}
-          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} className="profile-menu">
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>Logout</MenuItem>
           </Menu>
@@ -118,15 +115,15 @@ export default function EnergyDashboard() {
       </AppBar>
 
       {/* Main Content: Energy Dashboard */}
-      <Box sx={{ padding: 2 }}>
-        <Typography variant="h4" gutterBottom>
+      <Box className="energy-dashboard-header">
+        <Typography variant="h4" className="energy-dashboard-title" gutterBottom>
           Energy Dashboard
         </Typography>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={3} className="grid-container">
           {/* Bar Chart Section */}
-          <Grid item xs={12}>
-            <Paper elevation={3} sx={{ padding: 2 }}>
+          <Grid item xs={12} md={7}>
+            <Paper elevation={3} className="bar-chart-paper">
               <Typography variant="h6" gutterBottom>
                 Energy Used by Device (Bar Chart)
               </Typography>
@@ -134,9 +131,9 @@ export default function EnergyDashboard() {
             </Paper>
           </Grid>
 
-          {/* Pie Chart Section (Below Bar Chart) */}
-          <Grid item xs={12}>
-            <Paper elevation={3} sx={{ padding: 2, marginTop: 3 }}>
+          {/* Pie Chart Section */}
+          <Grid item xs={12} md={5} className="pie-chart-container">
+            <Paper elevation={3} className="pie-chart-paper">
               <Typography variant="h6" gutterBottom>
                 Energy Usage Distribution (Pie Chart)
               </Typography>
@@ -145,7 +142,7 @@ export default function EnergyDashboard() {
           </Grid>
         </Grid>
 
-        <Box sx={{ marginTop: 4 }}>
+        <Box className="total-energy">
           <Typography variant="h6">
             Total Energy Used: {totalEnergyUsed.toFixed(2)} kWh
           </Typography>

@@ -1,0 +1,61 @@
+/* EnergyDashboard.css */
+
+.energy-dashboard-container {
+    padding: 16px;
+  }
+  
+  .energy-dashboard-header {
+    padding: 16px;
+  }
+  
+  .energy-dashboard-title {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+  
+  .chart-container {
+    margin-top: 24px;
+  }
+  
+  .bar-chart-paper {
+    padding: 16px;
+  }
+  
+  .pie-chart-paper {
+    padding: 16px;
+    margin-top: 24px;
+  }
+  
+  .total-energy {
+    margin-top: 16px;
+    font-size: 1.25rem;
+  }
+  
+  .profile-button {
+    padding: 0;
+  }
+  
+  .profile-menu {
+    margin-top: 8px;
+  }
+  
+  .appbar-scrolling {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+    transition: background-color 0.3s ease;
+  }
+  
+  .appbar-transparent {
+    background-color: transparent !important;
+  }
+  
+  .grid-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .pie-chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
